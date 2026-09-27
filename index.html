@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Expense Tracker</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <h1>💰 Expense Tracker</h1>
+
+    <!-- Balance Summary -->
+    <div class="summary">
+      <div class="summary-box">
+        <span>Income</span>
+        <p id="income" class="income-text">₹0</p>
+      </div>
+      <div class="summary-box">
+        <span>Expense</span>
+        <p id="expense" class="expense-text">₹0</p>
+      </div>
+      <div class="summary-box balance-box">
+        <span>Balance</span>
+        <p id="balance">₹0</p>
+      </div>
+    </div>
+
+    <!-- Add Transaction Form -->
+    <form id="transaction-form">
+      <input type="text" id="text" placeholder="Description (e.g. Groceries)" required />
+      <input type="number" id="amount" placeholder="Amount (use - for expense, + for income)" required />
+      <button type="submit">Add Transaction</button>
+    </form>
+
+    <!-- Transaction List -->
+    <h2>History</h2>
+    <ul id="transaction-list"></ul>
+
+    <button id="clear-all">Clear All</button>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

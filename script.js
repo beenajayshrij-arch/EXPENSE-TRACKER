@@ -37,7 +37,9 @@ function render() {
     list.appendChild(li);
   });
 
+
   updateSummary();
+  generateInsights();
 }
 
 // Calculate and display income, expense, balance
@@ -55,6 +57,39 @@ function updateSummary() {
   balanceEl.textContent = `₹${total.toFixed(2)}`;
   incomeEl.textContent = `₹${income.toFixed(2)}`;
   expenseEl.textContent = `₹${Math.abs(expense).toFixed(2)}`;
+}
+function generateInsights() {
+  const box = document.getElementById('insights-box');
+
+  if (transactions.length === 0) {
+    box.innerHTML = '<p>Add a transaction to see insights here.</p>';
+    return;
+  }
+
+  const expenses = transactions.filter((t) => t.amount < 0);
+  const incomes = transactions.filter((t) => t.amount > 0);
+  const totalExpense = Math.abs(expenses.reduce((sum, t) => sum + t.amount, 0));
+  const totalIncome = incomes.reduce((sum, t) => sum + t.amount, 0);
+
+  let lines = [];
+
+  if (expenses.length > 0) {
+    const biggest = expenses.reduce((max, t) => (t.amount < max.amount ? t : max));
+    lines.push(`Your biggest expense so far is "${biggest.text}" at ₹${Math.abs(biggest.amount)}.`);
+  }
+
+  if (totalIncome > 0) {
+    const savingsRate = (((totalIncome - totalExpense) / totalIncome) * 100).toFixed(0);
+    if (savingsRate >= 0) {
+      lines.push(`You've saved about ${savingsRate}% of your income so far.`);
+    } else {
+      lines.push(`You're spending more than you earn by ₹${(totalExpense - totalIncome).toFixed(2)}.`);
+    }
+  }
+
+  lines.push(`You've logged ${transactions.length} transaction${transactions.length > 1 ? 's' : ''} in total.`);
+
+  box.innerHTML = lines.map((l) => `<p>${l}</p>`).join('');
 }
 
 // Add a new transaction
